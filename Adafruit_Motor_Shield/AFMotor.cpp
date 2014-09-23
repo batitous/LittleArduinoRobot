@@ -2,16 +2,16 @@
 // copyright Adafruit Industries LLC, 2009
 // this code is public domain, enjoy!
 
+// added Leonardo support - Michael Margolis, 24 July 2012
 
-#if (ARDUINO >= 100)
+#include <avr/io.h>
+#if ARDUINO >= 100
 #include "Arduino.h"
 #else
-#include <avr/io.h>
 #include "WProgram.h"
 #endif
+
 #include "AFMotor.h"
-
-
 
 static uint8_t latch_state;
 
@@ -21,13 +21,17 @@ uint8_t microstepcurve[] = {0, 50, 98, 142, 180, 212, 236, 250, 255};
 uint8_t microstepcurve[] = {0, 25, 50, 74, 98, 120, 141, 162, 180, 197, 212, 225, 236, 244, 250, 253, 255};
 #endif
 
-
 AFMotorController::AFMotorController(void) {
 }
 
 void AFMotorController::enable(void) {
     // setup the latch
-    
+    /*
+     LATCH_DDR |= _BV(LATCH);
+     ENABLE_DDR |= _BV(ENABLE);
+     CLK_DDR |= _BV(CLK);
+     SER_DDR |= _BV(SER);
+     */
     pinMode(MOTORLATCH, OUTPUT);
     pinMode(MOTORENABLE, OUTPUT);
     pinMode(MOTORDATA, OUTPUT);
@@ -428,7 +432,6 @@ void AF_Stepper::step(uint16_t steps, uint8_t dir,  uint8_t style) {
             steppingcounter -= 1000;
         }
     }
-    
     if (style == MICROSTEP) {
         while ((ret != 0) && (ret != MICROSTEPS)) {
             ret = onestep(dir, style);
