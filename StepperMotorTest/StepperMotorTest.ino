@@ -1,46 +1,89 @@
+// Test of stepper motor on the Arduino Yun.
+// How to use it :
+// - open the Arduino serial console
 
 #include <Arduino.h>
+#include <Console.h>
 #include <AFMotor.h>
 
 
-// 20 = 360deg / 18deg
-AF_Stepper motor1(20, 1);
-AF_Stepper motor2(20, 2);
+#define DEFAULT_STEP_NUMBER		4
+
+
+AF_Stepper motor1(200, 1);
+AF_Stepper motor2(200, 2);
+
+
+
+void motorInitialize()
+{
+	// rotation per min
+	motor1.setSpeed(50); 
+  	motor2.setSpeed(50);
+  	motor1.release();
+  	motor2.release(); 
+}
+
+void motorForward()
+{
+	for (int i=0; i < DEFAULT_STEP_NUMBER; i++)
+	{
+		motor1.step(1, FORWARD, SINGLE); 
+		motor1.release();
+		motor2.step(1, BACKWARD, SINGLE); 
+		motor2.release();
+	}
+}
+
+void motorBackward()
+{
+	for (int i=0; i < DEFAULT_STEP_NUMBER; i++)
+	{
+		motor1.step(1, BACKWARD, SINGLE); 
+		motor1.release();
+		motor2.step(1, FORWARD, SINGLE); 
+		motor2.release();
+	}
+}
 
 
 void setup()
 {
-	Serial.begin(115200);
-	/*while (!Serial) {
-    	; // wait for serial port to connect. Needed for Leonardo only
-  	}*/
+	Bridge.begin();
+  	Console.begin();
 
+	while (!Console)
+  	{
+  		// wait Arduino Console connection.
+  	}
 
-	Serial.println("Test of Stepper Motor !");
+	Console.println("Test of Stepper Motor !");
 	
-	// rotation per min
-	motor1.setSpeed(300); 
-	motor2.setSpeed(300);  
-
-
-	motor1.step(20, FORWARD, SINGLE); 
-	delay(500);
-	motor1.step(20, BACKWARD, SINGLE);
+	motorInitialize();
 
 }
 
 void loop()
 {
-	if (Serial.read()!=-1)
+	int command = Console.read();
+	if (command!=-1)
 	{
-		Serial.println("Turn 360 deg !");
-
-//		motor.step(20, FORWARD, DOUBLE);
-		motor1.step(20, FORWARD, SINGLE);
-
-		motor2.step(20, BACKWARD, SINGLE); 
-
-		Serial.println("End of turn !");
+		switch(command)
+		{
+			//--------- move forward
+			case 'f':
+				Console.println("Move forward...");
+				motorForward();
+			break;
+			//--------- move backward
+			case 'b':
+				Console.println("Move backward...");
+				motorBackward();
+			break;
+			default:
+				Console.println("Unknown command !");
+			break;
+		}
 	}
 
 }

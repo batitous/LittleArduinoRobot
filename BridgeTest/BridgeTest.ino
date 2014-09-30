@@ -1,7 +1,7 @@
 // Communication test between Arduino and Wifi with the Bridge
 //
 // After uploading, you can connect to your Arduino Yun with :
-// - from the command : ssh root@yourArduinoName.local 'telnet localhost 6571'
+// - from the command line : ssh root@yourArduinoName.local 'telnet localhost 6571'
 // - from the Arduino serial console
 // - from a web browser to http://yourArduinoName.local/arduino/toto/1234
 
@@ -22,6 +22,7 @@ void setup()
 
   	server.listenOnLocalhost();
   	server.begin();
+
 
 //	while (!Console)
 //  	{

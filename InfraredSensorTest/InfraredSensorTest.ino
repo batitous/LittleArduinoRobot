@@ -1,20 +1,25 @@
-
+// Test of infrared sensor on the Arduino Yun.
+// How to use it :
+// - open the Arduino serial console
 
 #include <Arduino.h>
+#include <Console.h>
 
 
-#define INFRARED_SENSOR_INPUT	1
+#define INFRARED_SENSOR_INPUT	A0
 
 
 void setup()
 {
-	Serial.begin(115200);
-	/*while (!Serial) {
-    	; // wait for serial port to connect. Needed for Leonardo only
-  	}*/
+	Bridge.begin();
+  	Console.begin();
 
+	while (!Console)
+  	{
+  		// wait Arduino Console connection.
+  	}
 
-	Serial.println("Simple loop for infrared snesor !");
+	Console.println("Simple loop for infrared sensor !");
 
 	pinMode(INFRARED_SENSOR_INPUT, INPUT);
 
@@ -26,7 +31,8 @@ void loop()
 	int analogValue = analogRead(INFRARED_SENSOR_INPUT);
 
 
-	Serial.println(analogValue);
+	Console.println(analogValue);
 	
+	delay(50);
 }
 
