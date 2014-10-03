@@ -8,7 +8,8 @@ Code and libraries for a custom little Robot Arduino.
 
 
 * `Adafruit_Motor_Shield` contains a patched version for the Arduino Leonardo / Yun of the Adafruit Motor Shield code.
-*  `Datasheets` stores the hardware files of the robots.
+* `Datasheets` stores the hardware files of the robots.
+* `BridgeTest`, `InfraredSensorTest` and `StepperMotorTest` contains basic examples for stepper motors, for infrared sensor and wifi communication.  
 
 
 ## How to use it
