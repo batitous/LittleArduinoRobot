@@ -7,7 +7,7 @@
 #include <AFMotor.h>
 
 
-#define DEFAULT_STEP_NUMBER		4
+#define DEFAULT_STEP_NUMBER		100
 
 
 AF_Stepper motor1(200, 1);
