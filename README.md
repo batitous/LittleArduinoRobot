@@ -7,7 +7,8 @@ Code and libraries for a custom little Robot Arduino.
 ## Structure
 
 
-* `Adafruit_Motor_Shield` contains a patched version for the Arduino Leonardo / Yun of the Adafruit Motor Shield code.
+* `Adafruit_Motor_Shield` contains a patched version for the Arduino Leonardo / Yun with Adafruit Motor Shield v1.
+* `Adafruit_Motor_Shield_V2` must be used for Adafruit Motor Shield v2.
 * `Datasheets` stores the hardware files of the robots.
 * `BridgeTest`, `InfraredSensorTest` and `StepperMotorTest` contains basic examples for stepper motors, for infrared sensor and wifi communication.  
 
@@ -15,8 +16,8 @@ Code and libraries for a custom little Robot Arduino.
 ## How to use it
 
 * Clone this repo.
-* Copy the `Adafruit_Motor_Shield` repertory into your Arduino libraries repertory.
-* Launch your Arduino IDE, the `Adafruit_Motor_Shield` must appears in the libraries menu list.
+* Copy the `Adafruit_Motor_Shield_V2` repertory into your Arduino libraries repertory.
+* Launch your Arduino IDE, the `Adafruit_Motor_Shield_V2` must appears in the libraries menu list.
 
 
 ## License
