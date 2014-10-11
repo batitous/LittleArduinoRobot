@@ -11,6 +11,8 @@
 
 #define DEFAULT_STEP_NUMBER		100
 
+#define INFRARED_SENSOR_INPUT	A0
+
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
 Adafruit_StepperMotor * motor1 = AFMS.getStepper(200, 2);
@@ -27,8 +29,8 @@ void motorInitialize()
 	AFMS.begin();
 	
 	// rotation per min
-	motor1->setSpeed(100); 
-  	motor2->setSpeed(100);
+	motor1->setSpeed(60); 
+  	motor2->setSpeed(60);
   	motor1->release();
   	motor2->release(); 
 
@@ -87,16 +89,25 @@ void setup()
 
 	motorInitialize();
 
+	pinMode(INFRARED_SENSOR_INPUT, INPUT);
+
 }
 
 void loop()
 {
+	int analogValue;
 
 	int command = Console.read();
 	if (command!=-1)
 	{
 		switch(command)
 		{
+			//--------- read analog sensor
+			case 'a':
+				analogValue = analogRead(INFRARED_SENSOR_INPUT);
+				Console.print("Analog value: ");
+				Console.println(analogValue);
+			break;
 			//--------- move forward
 			case 'f':
 				Console.println("Move forward...");
@@ -139,10 +150,10 @@ void loop()
 		motorTurnRight();
 		motorTurnLeft();
 		motorBackward();
-		
+
 		Console.println("I'm alive !");
 
-		if (counter==20)
+		if (counter==50)
 		{
 			run = false;
 			Console.println("stop counter");
