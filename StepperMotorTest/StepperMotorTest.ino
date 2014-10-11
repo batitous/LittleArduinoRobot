@@ -16,27 +16,31 @@ Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 Adafruit_StepperMotor * motor1 = AFMS.getStepper(200, 2);
 Adafruit_StepperMotor * motor2 = AFMS.getStepper(200, 1);
 
+bool run ;
+int counter;
 
 
 void motorInitialize()
 {
+	run = false;
+
 	AFMS.begin();
 	
 	// rotation per min
-	motor1->setSpeed(50); 
-  	motor2->setSpeed(50);
+	motor1->setSpeed(100); 
+  	motor2->setSpeed(100);
   	motor1->release();
   	motor2->release(); 
+
+
 }
 
 void motorForward()
 {
 	for (int i=0; i < DEFAULT_STEP_NUMBER; i++)
 	{
-		motor1->step(1, FORWARD, SINGLE); 
-		motor1->release();
-		motor2->step(1, BACKWARD, SINGLE); 
-		motor2->release();
+		motor1->step(1, FORWARD, SINGLE);
+		motor2->step(1, FORWARD, SINGLE); 
 	}
 }
 
@@ -45,9 +49,26 @@ void motorBackward()
 	for (int i=0; i < DEFAULT_STEP_NUMBER; i++)
 	{
 		motor1->step(1, BACKWARD, SINGLE); 
-		motor1->release();
+		motor2->step(1, BACKWARD, SINGLE); 
+	}
+}
+
+void motorTurnLeft()
+{
+	for (int i=0; i < DEFAULT_STEP_NUMBER; i++)
+	{
+		motor1->step(1, BACKWARD, SINGLE); 
 		motor2->step(1, FORWARD, SINGLE); 
-		motor2->release();
+	}
+}
+
+
+void motorTurnRight()
+{
+	for (int i=0; i < DEFAULT_STEP_NUMBER; i++)
+	{
+		motor1->step(1, FORWARD, SINGLE); 
+		motor2->step(1, BACKWARD, SINGLE); 
 	}
 }
 
@@ -57,19 +78,20 @@ void setup()
 	Bridge.begin();
   	Console.begin();
 
-	while (!Console)
-  	{
-  		// wait Arduino Console connection.
-  	}
+//	while (!Console)
+//  	{
+//  		// wait Arduino Console connection.
+//  	}
 
 	Console.println("Test of Stepper Motor !");
-	
+
 	motorInitialize();
 
 }
 
 void loop()
 {
+
 	int command = Console.read();
 	if (command!=-1)
 	{
@@ -85,10 +107,45 @@ void loop()
 				Console.println("Move backward...");
 				motorBackward();
 			break;
-			default:
-				Console.println("Unknown command !");
+			//--------- motor 1, one step
+			case '1':
+				Console.println("single motor1");
+				motor1->step(1, BACKWARD, SINGLE); 
+				break;
+			//--------- motor 1 and 2, one step
+			case '2':
+				Console.println("single motor1 2");
+				motor1->step(1, BACKWARD, SINGLE); 
+				delay(1);
+				motor2->step(1, BACKWARD, SINGLE);
+				break;
+			//--------- movement sequence test
+			case 's':
+				if (run==false)
+				{
+					Console.println("run");
+					run = true;
+					counter = 0;
+				}
 			break;
 		}
 	}
 
+	if (run==true)
+	{
+		counter++;
+
+		motorForward();
+		motorTurnRight();
+		motorTurnLeft();
+		motorBackward();
+		
+		Console.println("I'm alive !");
+
+		if (counter==20)
+		{
+			run = false;
+			Console.println("stop counter");
+		}
+	}
 }
