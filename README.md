@@ -6,7 +6,7 @@ Code and libraries for a custom little Robot Arduino.
 
 ## Structure
 
-
+* `3D_Files` stores the CAO files in STEP and EASM format. Open it with a free CAO viewer.
 * `Adafruit_Motor_Shield` contains a patched version for the Arduino Leonardo / Yun with Adafruit Motor Shield v1.
 * `Adafruit_Motor_Shield_V2` must be used for Adafruit Motor Shield v2.
 * `Datasheets` stores the hardware files of the robots.
