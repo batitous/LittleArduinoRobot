@@ -6,11 +6,11 @@ Code and libraries for a custom little Robot Arduino.
 
 ## Structure
 
-* `3D_Files` stores the CAO files in STEP and EASM format. Open it with a free CAO viewer.
-* `Adafruit_Motor_Shield` contains a patched version for the Arduino Leonardo / Yun with Adafruit Motor Shield v1.
-* `Adafruit_Motor_Shield_V2` must be used for Adafruit Motor Shield v2.
+* `3D_Files` stores the CAO files in STEP and EASM format. Open it with a free CAO viewer. The robot can be build with a 3D print machine.
+* `Adafruit_Motor_Shield_V2` must be used with the robot.
 * `Datasheets` stores the hardware files of the robots.
-* `BridgeTest`, `InfraredSensorTest` and `StepperMotorTest` contains basic examples for stepper motors, for infrared sensor and wifi communication.  
+* `Examples1` stores really simple examples if you are beginners 
+* `Examples2` uses the Wifi of the robot and are much more difficult if you begin with Arduino.
 
 
 ## How to use it
@@ -18,6 +18,7 @@ Code and libraries for a custom little Robot Arduino.
 * Clone this repo.
 * Copy the `Adafruit_Motor_Shield_V2` repertory into your Arduino libraries repertory.
 * Launch your Arduino IDE, the `Adafruit_Motor_Shield_V2` must appears in the libraries menu list.
+* Try the examples !
 
 
 ## License
